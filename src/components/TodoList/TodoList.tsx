@@ -1,23 +1,17 @@
 /* eslint-disable */
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getTodos, getUser } from '../../api';
-import { setTodos } from '../../features/todos';
+import { getUser } from '../../api';
+
 import { setCurrentTodo } from '../../features/currentTodo';
 import { Todo } from '../../types/Todo';
 import { setCurrentUser } from '../../features/currentUser';
 
 export const TodoList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const todos = useAppSelector(state => state.todos);
+  const todos = useAppSelector(state => state.todos.items);
   const filter = useAppSelector(state => state.filter);
   const currentTodo = useAppSelector(state => state.currentTodo);
-
-  useEffect(() => {
-    getTodos().then(todosFromServer => {
-      dispatch(setTodos(todosFromServer));
-    });
-  }, [dispatch]);
 
   const filteredTodos = todos.filter(todo => {
     const matchStatus =
